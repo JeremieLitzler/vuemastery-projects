@@ -3,10 +3,11 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+// import EventService from '@/services/EventService.Nobackend.js';
 export default new Vuex.Store({
   state: {
     user: {
-      name: 'Jeremie',
+      name: 'Jeremie L.',
       id: 'jeremiel',
     },
     categories: [
@@ -21,5 +22,10 @@ export default new Vuex.Store({
   },
   mutations: {},
   actions: {},
+  getters: {
+    categoryCount: (state) => {
+      return state.categories.length;
+    },
+  },
   modules: {},
 });
