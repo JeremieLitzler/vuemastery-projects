@@ -66,4 +66,14 @@ export default {
       }
     });
   },
+  postEvent(event, fakeReject = false) {
+    return new Promise((resolve, reject) => {
+      EVENTS.push(event);
+      if (!fakeReject) {
+        resolve({ data: EVENTS });
+      } else {
+        reject(Error('Event not added!'));
+      }
+    });
+  },
 };

@@ -1,4 +1,7 @@
 import axios from 'axios';
+import EventServiceNoBackend from '@/services/EventService.Nobackend';
+
+const noBackend = true;
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3000',
@@ -11,9 +14,18 @@ const apiClient = axios.create({
 
 export default {
   getEvents() {
-    return apiClient.get('/events');
+    return noBackend
+      ? EventServiceNoBackend.getEvents()
+      : apiClient.get('/events');
   },
   getEvent(id) {
-    return apiClient.get(`/events/${id}`);
+    return noBackend
+      ? EventServiceNoBackend.getEvent(id)
+      : apiClient.get(`/events/${id}`);
+  },
+  postEvent(event) {
+    return noBackend
+      ? EventServiceNoBackend.postEvent(event)
+      : apiClient.post('/events', event);
   },
 };
