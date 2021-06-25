@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import EventService from '@/services/EventService.Nobackend';
+import EventService from '@/services/EventService';
 
 Vue.use(Vuex);
 
@@ -21,10 +21,18 @@ export default new Vuex.Store({
       'community',
     ],
     events: [],
+    eventCount: 0,
   },
   mutations: {
     ADD_EVENT(state, event) {
       state.events.push(event);
+    },
+    SET_EVENTS(state, events) {
+      state.events = events;
+    },
+    SET_EVENT_COUNT(state, count) {
+      console.log('eventCount', count);
+      state.eventCount = count;
     },
   },
   actions: {
@@ -38,6 +46,20 @@ export default new Vuex.Store({
         //only commit if the backend has saved the data
         commit('ADD_EVENT', event),
       );
+    },
+    fetchEvents({ commit }, { itemPerPage, page }) {
+      //see https://vuejs.org/v2/api/#created
+      EventService.getEvents(itemPerPage, page)
+        .then((response) => {
+          console.log('events', response.data);
+          if (response.headers) {
+            commit('SET_EVENT_COUNT', response.headers['x-total-count']);
+          }
+          commit('SET_EVENTS', response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   getters: {

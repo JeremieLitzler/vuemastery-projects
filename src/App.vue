@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <NavBar />
-    <router-view />
+    <!-- Reload the component when the url change -->
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 <script>
@@ -9,7 +10,7 @@ import NavBar from '@/components/NavBar.vue';
 
 export default {
   components: {
-    NavBar
+    NavBar,
   },
 };
 </script>
