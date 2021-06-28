@@ -258,13 +258,13 @@ export default {
         if (EVENTS.length < start) start = EVENTS.length - itemsPerPage;
         const end = itemsPerPage + start;
 
-        console.log(
-          "EventService.Nobackend => itemsPerPage:",
-          itemsPerPage,
-          "page:",
-          page,
-        );
-        console.log("EventService.Nobackend=>start:", start, "end:", end);
+        // console.log(
+        //   "EventService.Nobackend => itemsPerPage:",
+        //   itemsPerPage,
+        //   "page:",
+        //   page,
+        // );
+        // console.log("EventService.Nobackend=>start:", start, "end:", end);
         resolve({
           data: EVENTS.slice(start, end),
           headers: { "x-total-count": EVENTS.length },

@@ -12,18 +12,24 @@ const actions = {
       commit("ADD_EVENT", event);
     });
   },
-  fetchEvents({ commit }, { itemsPerPage, page }) {
+  fetchEvents({ commit }, { page }) {
+    // console.log(
+    //   "Action fetchEvents => itemsPerPage",
+    //   this.state.itemsPerPage,
+    //   "; page:",
+    //   page,
+    // );
     //see https://vuejs.org/v2/api/#created
-    EventService.getEvents(itemsPerPage, page)
+    EventService.getEvents(this.state.itemsPerPage, page)
       .then((response) => {
-        console.log("events", response.data);
+        // console.log("Action fetchEvents => events", response.data);
         if (response.headers) {
           commit("SET_EVENT_COUNT", response.headers["x-total-count"]);
         }
         commit("SET_EVENTS", response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   },
 };

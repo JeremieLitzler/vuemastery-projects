@@ -20,7 +20,7 @@ export default {
    * @returns {Array} The events filtered
    */
   getEvents(itemsPerPage, page) {
-    console.log("EventService=>No backend use: ", noBackend);
+    // console.log("EventService=>No backend use: ", noBackend);
     return noBackend
       ? EventServiceNoBackend.getEvents(itemsPerPage, page)
       : apiClient.get(`/events?_limit=${itemsPerPage}&_page=${page}`);
