@@ -1,14 +1,14 @@
-import axios from 'axios';
-import EventServiceNoBackend from '@/services/EventService.Nobackend';
+import axios from "axios";
+import EventServiceNoBackend from "@/services/EventService.Nobackend";
 
 const noBackend = true;
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: "http://localhost:3000",
   withCredentials: false,
   headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
 });
 
@@ -19,8 +19,8 @@ export default {
    * @param {*} page The page number
    * @returns {Array} The events filtered
    */
-  getEvents(itemsPerPage = 3, page = 1) {
-    console.log('No backend use: ', noBackend);
+  getEvents(itemsPerPage, page) {
+    console.log("EventService=>No backend use: ", noBackend);
     return noBackend
       ? EventServiceNoBackend.getEvents(itemsPerPage, page)
       : apiClient.get(`/events?_limit=${itemsPerPage}&_page=${page}`);
@@ -43,6 +43,6 @@ export default {
   postEvent(event) {
     return noBackend
       ? EventServiceNoBackend.postEvent(event)
-      : apiClient.post('/events', event);
+      : apiClient.post("/events", event);
   },
 };
