@@ -1,17 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import actions from "./actions";
-import getters from "./getters";
-import mutations from "./mutations";
+import * as user from "@/store/modules/user";
+import * as event from "@/store/modules/event";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {
-      name: "Jeremie L.",
-      id: "jeremiel",
-    },
     categories: [
       "sustainability",
       "nature",
@@ -21,12 +16,13 @@ export default new Vuex.Store({
       "food",
       "community",
     ],
-    events: [],
-    eventCount: 0,
-    itemsPerPage: 3,
   },
-  mutations,
-  actions,
-  getters,
-  modules: {},
+  mutations: {},
+  actions: {},
+  getters: {
+    categoryCount: (state) => {
+      return state.categories.length;
+    },
+  },
+  modules: { user, event },
 });

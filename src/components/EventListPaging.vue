@@ -23,12 +23,16 @@ export default {
   props: ["current-page"],
   computed: {
     showPagingPrev() {
-      return this.eventCount < this.itemsPerPage || this.currentPage !== 1;
+      // console.table({"eventCount": this.event.eventCount, "itemsPerPage": this.event.itemsPerPage, "currentPage": })
+      return (
+        this.event.eventCount < this.event.itemsPerPage ||
+        this.currentPage !== 1
+      );
     },
     showPagingNext() {
-      return this.eventCount > this.currentPage * this.itemsPerPage;
+      return this.event.eventCount > this.currentPage * this.event.itemsPerPage;
     },
-    ...mapState(["eventCount", "itemsPerPage"]),
+    ...mapState(["event"]),
   },
 };
 </script>

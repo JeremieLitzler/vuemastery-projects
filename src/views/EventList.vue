@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Events</h1>
-    <event-card v-for="event in events" :key="event.id" :event="event" />
+    <event-card v-for="event in event.events" :key="event.id" :event="event" />
     <event-list-paging :current-page="currentPage" />
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
     currentPage() {
       return parseInt(this.$route.query.page) || 1;
     },
-    ...mapState(["events"]),
+    ...mapState(["event", "user"]),
   },
 };
 </script>

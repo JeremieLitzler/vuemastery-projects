@@ -50,8 +50,8 @@
 
 <script>
 // import { mapState, mapGetters } from 'vuex';
-import Datepicker from 'vuejs-datepicker';
-import { v4 as uuidv4 } from 'uuid';
+import Datepicker from "vuejs-datepicker";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   components: { Datepicker },
@@ -69,11 +69,11 @@ export default {
   methods: {
     saveEvent() {
       this.$store
-        .dispatch('saveEvent', this.event)
+        .dispatch("saveEvent", this.event)
         .then(() => {
           //only continue if the action worked
           this.$router.push({
-            name: 'event-details',
+            name: "event-details",
             params: { id: this.event.id },
           });
           this.event = this.scaffoldEventObject();
@@ -83,19 +83,19 @@ export default {
         });
     },
     scaffoldEventObject() {
-      const user = this.$store.state.user;
+      const user = this.$store.state.user.user;
       const eventId = uuidv4();
       console.log(eventId);
       return {
         id: eventId,
         user,
-        category: '',
+        category: "",
         organizer: user,
-        title: 'test',
-        description: 'test',
-        location: 'france',
-        date: '',
-        time: '',
+        title: "test",
+        description: "test",
+        location: "france",
+        date: "",
+        time: "",
         attendees: [],
       };
     },
