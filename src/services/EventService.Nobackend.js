@@ -276,7 +276,7 @@ export default {
   },
   getEvent(id) {
     return new Promise((resolve, reject) => {
-      const matchingEvent = EVENTS.find((event) => event.id === id);
+      const matchingEvent = EVENTS.find((event) => event.id.toString() === id);
       if (matchingEvent) {
         resolve({ data: matchingEvent });
       } else {

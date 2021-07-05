@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 import EventListPaging from "../components/EventListPaging.vue";
 import EventCard from "../components/EventCard.vue";
@@ -17,7 +17,7 @@ export default {
     EventCard,
   },
   created() {
-    this.$store.dispatch("fetchEvents", {
+    this.fetchEvents({
       page: this.currentPage,
     });
   },
@@ -27,5 +27,6 @@ export default {
     },
     ...mapState(["event", "user"]),
   },
+  methods: mapActions("event", ["fetchEvents"]), //using namespacing
 };
 </script>

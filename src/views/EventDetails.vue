@@ -28,28 +28,19 @@
   </div>
 </template>
 <script>
-import EventService from '@/services/EventService.js';
+import { mapActions, mapState } from "vuex";
 export default {
-  props: ['id'],
-  data() {
-    return {
-      event: {},
-    };
-  },
+  props: ["id"],
   computed: {
     organizerName() {
-      return this.event.organizer ? this.event.organizer.name : 'Unknown';
+      return this.event.organizer ? this.event.organizer.name : "Unknown";
     },
+    ...mapState({ event: (state) => state.event.event }),
   },
   created() {
-    EventService.getEvent(this.id)
-      .then((response) => {
-        this.event = response.data;
-      })
-      .catch((error) => {
-        console.error(error.response);
-      });
+    this.fetchEvent(this.id);
   },
+  methods: mapActions("event", ["fetchEvent"]), //using namespacing
 };
 </script>
 

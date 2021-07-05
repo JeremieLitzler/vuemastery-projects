@@ -69,7 +69,7 @@ export default {
   methods: {
     saveEvent() {
       this.$store
-        .dispatch("saveEvent", this.event)
+        .dispatch("event/saveEvent", this.event)
         .then(() => {
           //only continue if the action worked
           this.$router.push({

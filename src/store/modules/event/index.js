@@ -1,17 +1,9 @@
-// import Vue from "vue";
-// import Vuex from "vuex";
-
-// import kactions from "@/store/modules/event/actions";
-//  import getters from "@/store/modules/event/getters";
-//  import mutations from "@/store/modules/event/mutations";
 import EventService from "@/services/EventService";
 
-//Vue.use(Vuex);
-
-//export default new Vuex.Store({
-
+export const namespaced = true;
 export const state = {
   events: [],
+  event: {},
   eventCount: 0,
   itemsPerPage: 3,
 };
@@ -22,7 +14,8 @@ export const actions = {
    * @param {Object} param0 context object
    * @param {Object} event event to save
    */
-  saveEvent({ commit }, event) {
+  saveEvent({ commit, rootState }, event) {
+    console.log(`User ${rootState.user.user.name} is creating an event`);
     return EventService.postEvent(event).then(() => {
       //only commit if the backend has saved the data
       commit("ADD_EVENT", event);
@@ -48,6 +41,15 @@ export const actions = {
         console.error(error);
       });
   },
+  fetchEvent({ commit }, id) {
+    EventService.getEvent(id)
+      .then((response) => {
+        commit("SET_EVENT", response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  },
 };
 
 export const mutations = {
@@ -56,6 +58,9 @@ export const mutations = {
   },
   SET_EVENTS(state, events) {
     state.events = events;
+  },
+  SET_EVENT(state, event) {
+    state.event = event;
   },
   SET_EVENT_COUNT(state, count) {
     state.eventCount = count;
