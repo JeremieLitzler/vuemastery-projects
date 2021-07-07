@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     notification: {
@@ -12,11 +13,24 @@ export default {
       required: true,
     },
   },
+  data() {
+    return { timeout: null };
+  },
+  mounted() {
+    this.timeout = setTimeout(() => {
+      this.delete(this.notification);
+    }, 3000);
+  },
+  beforeDestroy() {
+    //prevent a memory leak if the notification is dismissed manually via a closer icon
+    clearTimeout(this.timeout);
+  },
   computed: {
     notificationTypeClass() {
       return `text-${this.notification.type}`;
     },
   },
+  methods: mapActions("notification", ["delete"]),
 };
 </script>
 
@@ -24,6 +38,7 @@ export default {
 .notification-bar {
   margin: 0;
   padding: 0.25em 0.5em;
+  font-size: 1rem;
 }
 .text-success {
   background-color: greenyellow;

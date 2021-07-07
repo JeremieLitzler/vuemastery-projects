@@ -23,5 +23,7 @@ export default {
 .notification-container {
   width: 100%;
   border: 1px solid gainsboro;
+  position: fixed;
+  bottom: 0;
 }
 </style>
