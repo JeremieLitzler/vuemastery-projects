@@ -1,5 +1,6 @@
 {
   "name": "events-app",
+  "description": "An events App built with Vue",
   "version": "0.1.0",
   "private": true,
   "scripts": {
