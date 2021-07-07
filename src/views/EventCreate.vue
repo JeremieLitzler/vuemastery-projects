@@ -78,9 +78,7 @@ export default {
           });
           this.event = this.scaffoldEventObject();
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(() => {});
     },
     scaffoldEventObject() {
       const user = this.$store.state.user.user;

@@ -31,11 +31,16 @@ export const actions = {
    */
   saveEvent({ commit, dispatch, rootState }, event) {
     console.log(`User ${rootState.user.user.name} is creating an event`);
-    return EventService.postEvent(event).then(() => {
-      //only commit if the backend has saved the data
-      commit("ADD_EVENT", event);
-      dispatchSuccessNotification(dispatch);
-    });
+    return EventService.postEvent(event)
+      .then(() => {
+        //only commit if the backend has saved the data
+        commit("ADD_EVENT", event);
+        dispatchSuccessNotification(dispatch);
+      })
+      .catch((error) => {
+        dispatchErrorNotification("saveEvent", dispatch, error);
+        throw error;
+      });
   },
   fetchEvents({ commit, dispatch }, { page }) {
     // console.log(
