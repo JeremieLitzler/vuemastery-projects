@@ -1,6 +1,9 @@
 <template>
   <div class="notification-bar" :class="notificationTypeClass">
-    <p>{{ notification.message }}</p>
+    <p>
+      {{ notification.message }}
+      <span class="notification-dismiss" @click="manuallyDismiss">X</span>
+    </p>
   </div>
 </template>
 
@@ -14,9 +17,10 @@ export default {
     },
   },
   data() {
-    return { timeout: null };
+    return { timeout: null, automaticDismiss: true };
   },
   mounted() {
+    if (!this.automaticDismiss) return;
     this.timeout = setTimeout(() => {
       this.delete(this.notification);
     }, 3000);
@@ -30,15 +34,20 @@ export default {
       return `text-${this.notification.type}`;
     },
   },
-  methods: mapActions("notification", ["delete"]),
+  methods: {
+    manuallyDismiss() {
+      this.delete(this.notification);
+    },
+    ...mapActions("notification", ["delete"]),
+  },
 };
 </script>
 
 <style scoped>
 .notification-bar {
-  margin: 0;
+  margin: 0 1em 1em;
   padding: 0.25em 0.5em;
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 .text-success {
   background-color: greenyellow;
@@ -46,5 +55,11 @@ export default {
 .text-error {
   background-color: red;
   color: white;
+}
+
+.notification-dismiss {
+  background-color: black;
+  color: white;
+  border-radius: 10em;
 }
 </style>

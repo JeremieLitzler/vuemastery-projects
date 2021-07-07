@@ -21,9 +21,8 @@ export default {
 
 <style scoped>
 .notification-container {
-  width: 100%;
-  border: 1px solid gainsboro;
   position: fixed;
   bottom: 0;
+  right: 0;
 }
 </style>

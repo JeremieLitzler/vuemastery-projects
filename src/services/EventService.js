@@ -1,7 +1,7 @@
 import axios from "axios";
 import EventServiceNoBackend from "@/services/EventService.Nobackend";
 
-const noBackend = true;
+const noBackend = false;
 
 const apiClient = axios.create({
   baseURL: "http://localhost:3000",
