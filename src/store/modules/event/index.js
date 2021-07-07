@@ -68,7 +68,7 @@ export const actions = {
         commit("SET_EVENT", response.data);
       })
       .catch((error) => {
-        dispatchErrorNotification("fetchEvent", dispatch, error);
+        dispatchErrorNotification(`fetchEvent id=${id}`, dispatch, error);
       });
   },
 };
