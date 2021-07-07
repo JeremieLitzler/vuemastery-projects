@@ -8,20 +8,36 @@ export const state = {
   itemsPerPage: 3,
 };
 
+function dispatchSuccessNotification(dispatch) {
+  const notif = {
+    type: "success",
+    message: `The event was saved`,
+  };
+  dispatch("notification/add", notif, { root: true });
+}
+function dispatchErrorNotification(source, dispatch, error) {
+  const notif = {
+    type: "error",
+    message: `There was an error in ${source} => ${error.message}`,
+  };
+  dispatch("notification/add", notif, { root: true });
+}
+
 export const actions = {
   /**
    * Save a new event
    * @param {Object} param0 context object
    * @param {Object} event event to save
    */
-  saveEvent({ commit, rootState }, event) {
+  saveEvent({ commit, dispatch, rootState }, event) {
     console.log(`User ${rootState.user.user.name} is creating an event`);
     return EventService.postEvent(event).then(() => {
       //only commit if the backend has saved the data
       commit("ADD_EVENT", event);
+      dispatchSuccessNotification(dispatch);
     });
   },
-  fetchEvents({ commit }, { page }) {
+  fetchEvents({ commit, dispatch }, { page }) {
     // console.log(
     //   "Action fetchEvents => itemsPerPage",
     //   this.state.itemsPerPage,
@@ -38,16 +54,16 @@ export const actions = {
         commit("SET_EVENTS", response.data);
       })
       .catch((error) => {
-        console.error(error);
+        dispatchErrorNotification("fetchEvents", dispatch, error);
       });
   },
-  fetchEvent({ commit }, id) {
+  fetchEvent({ commit, dispatch }, id) {
     EventService.getEvent(id)
       .then((response) => {
         commit("SET_EVENT", response.data);
       })
       .catch((error) => {
-        console.error(error);
+        dispatchErrorNotification("fetchEvent", dispatch, error);
       });
   },
 };
