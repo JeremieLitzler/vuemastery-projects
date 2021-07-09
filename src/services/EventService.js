@@ -1,7 +1,8 @@
 import axios from "axios";
 import EventServiceNoBackend from "@/services/EventService.Nobackend";
+import NProgress from "nprogress";
 
-const noBackend = true;
+const noBackend = false;
 
 const apiClient = axios.create({
   baseURL: "http://localhost:3000",
@@ -12,6 +13,17 @@ const apiClient = axios.create({
   },
 });
 
+if (!noBackend) {
+  apiClient.interceptors.request.use((config) => {
+    NProgress.start();
+    return config;
+  });
+
+  apiClient.interceptors.response.use((response) => {
+    NProgress.done();
+    return response;
+  });
+}
 export default {
   /**
    *

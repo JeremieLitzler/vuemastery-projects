@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Events</h1>
+    <p v-if="isLoading">Hang on, we are getting your data...</p>
     <event-card v-for="event in event.events" :key="event.id" :event="event" />
     <event-list-paging :current-page="currentPage" />
   </div>
@@ -22,6 +23,9 @@ export default {
     });
   },
   computed: {
+    isLoading() {
+      return true;
+    },
     currentPage() {
       return parseInt(this.$route.query.page) || 1;
     },
