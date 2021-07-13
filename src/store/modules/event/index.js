@@ -1,5 +1,5 @@
 import EventService from "@/services/EventService";
-
+import NProgress from "nprogress";
 export const namespaced = true;
 export const state = {
   events: [],
@@ -43,13 +43,7 @@ export const actions = {
       });
   },
   fetchEvents({ commit, dispatch }, { page }) {
-    // console.log(
-    //   "Action fetchEvents => itemsPerPage",
-    //   this.state.itemsPerPage,
-    //   "; page:",
-    //   page,
-    // );
-    //see https://vuejs.org/v2/api/#created
+    NProgress.start();
     EventService.getEvents(this.state.event.itemsPerPage, page)
       .then((response) => {
         // console.log("Action fetchEvents => events", response.data);
@@ -57,13 +51,15 @@ export const actions = {
           commit("SET_EVENT_COUNT", response.headers["x-total-count"]);
         }
         commit("SET_EVENTS", response.data);
+        NProgress.done();
       })
       .catch((error) => {
         dispatchErrorNotification("fetchEvents", dispatch, error);
+        NProgress.done();
       });
   },
   fetchEvent({ commit, dispatch }, id) {
-    EventService.getEvent(id)
+    return EventService.getEvent(id)
       .then((response) => {
         commit("SET_EVENT", response.data);
       })

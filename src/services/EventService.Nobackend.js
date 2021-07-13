@@ -249,6 +249,7 @@ const EVENTS = [
   },
 ];
 
+const DELAY_RESOLVE_MS = 2000;
 export default {
   getEvents(itemsPerPage, page, fakeReject = false) {
     return new Promise((resolve, reject) => {
@@ -258,17 +259,12 @@ export default {
         if (EVENTS.length < start) start = EVENTS.length - itemsPerPage;
         const end = itemsPerPage + start;
 
-        // console.log(
-        //   "EventService.Nobackend => itemsPerPage:",
-        //   itemsPerPage,
-        //   "page:",
-        //   page,
-        // );
-        // console.log("EventService.Nobackend=>start:", start, "end:", end);
-        resolve({
-          data: EVENTS.slice(start, end),
-          headers: { "x-total-count": EVENTS.length },
-        });
+        setTimeout(() => {
+          resolve({
+            data: EVENTS.slice(start, end),
+            headers: { "x-total-count": EVENTS.length },
+          });
+        }, DELAY_RESOLVE_MS);
       } else {
         reject(Error("Events not found!"));
       }
@@ -281,7 +277,9 @@ export default {
       const matchingEvent = EVENTS.find((event) => event.id === id);
       console.log(matchingEvent);
       if (matchingEvent) {
-        resolve({ data: matchingEvent });
+        setTimeout(() => {
+          resolve({ data: matchingEvent });
+        }, DELAY_RESOLVE_MS);
       } else {
         reject(Error("Event not found!"));
       }

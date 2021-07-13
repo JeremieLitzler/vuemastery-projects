@@ -28,19 +28,49 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
+import NProgress from "nprogress";
+import store from "@/store";
+
 export default {
   props: ["id"],
+  beforeRouterEnter(routeTo, routeFrom, next) {
+    NProgress.start();
+    console.log("progress bar started...");
+    store
+      .dispatch("event/fetchEvent", routeTo.params.id)
+      .then(() => {
+        console.log("item fetched...");
+
+        NProgress.done();
+        next();
+      })
+      .catch((err) => {
+        console.error(err);
+        next(false);
+      });
+  },
+  created() {
+    console.log("Created hook called...");
+    NProgress.start();
+
+    store
+      .dispatch("event/fetchEvent", this.id)
+      .then(() => {
+        NProgress.done();
+      })
+      .catch((err) => {
+        console.error(err);
+
+        NProgress.done();
+      });
+  },
   computed: {
     organizerName() {
       return this.event.organizer ? this.event.organizer.name : "Unknown";
     },
     ...mapState({ event: (state) => state.event.event }),
   },
-  created() {
-    this.fetchEvent(this.id);
-  },
-  methods: mapActions("event", ["fetchEvent"]), //using namespacing
 };
 </script>
 
