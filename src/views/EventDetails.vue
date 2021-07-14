@@ -34,7 +34,7 @@ import store from "@/store";
 
 export default {
   props: ["id"],
-  beforeRouterEnter(routeTo, routeFrom, next) {
+  beforeRouteEnter(routeTo, routeFrom, next) {
     NProgress.start();
     console.log("progress bar started...");
     store
@@ -50,20 +50,8 @@ export default {
         next(false);
       });
   },
-  created() {
-    console.log("Created hook called...");
-    NProgress.start();
-
-    store
-      .dispatch("event/fetchEvent", this.id)
-      .then(() => {
-        NProgress.done();
-      })
-      .catch((err) => {
-        console.error(err);
-
-        NProgress.done();
-      });
+  beforeCreate() {
+    console.log("in beforeCreate...");
   },
   computed: {
     organizerName() {
