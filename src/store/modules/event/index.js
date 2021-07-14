@@ -1,5 +1,4 @@
-import EventService from "@/services/EventService";
-import NProgress from "nprogress";
+import EventService from '@/services/EventService';
 export const namespaced = true;
 export const state = {
   events: [],
@@ -10,17 +9,17 @@ export const state = {
 
 function dispatchSuccessNotification(dispatch) {
   const notif = {
-    type: "success",
+    type: 'success',
     message: `The event was saved`,
   };
-  dispatch("notification/add", notif, { root: true });
+  dispatch('notification/add', notif, { root: true });
 }
 function dispatchErrorNotification(source, dispatch, error) {
   const notif = {
-    type: "error",
+    type: 'error',
     message: `There was an error in ${source} => ${error.message}`,
   };
-  dispatch("notification/add", notif, { root: true });
+  dispatch('notification/add', notif, { root: true });
 }
 
 export const actions = {
@@ -34,34 +33,32 @@ export const actions = {
     return EventService.postEvent(event)
       .then(() => {
         //only commit if the backend has saved the data
-        commit("ADD_EVENT", event);
+        commit('ADD_EVENT', event);
         dispatchSuccessNotification(dispatch);
       })
       .catch((error) => {
-        dispatchErrorNotification("saveEvent", dispatch, error);
+        dispatchErrorNotification('saveEvent', dispatch, error);
         throw error;
       });
   },
   fetchEvents({ commit, dispatch }, { page }) {
-    NProgress.start();
     EventService.getEvents(this.state.event.itemsPerPage, page)
       .then((response) => {
         // console.log("Action fetchEvents => events", response.data);
         if (response.headers) {
-          commit("SET_EVENT_COUNT", response.headers["x-total-count"]);
+          commit('SET_EVENT_COUNT', response.headers['x-total-count']);
         }
-        commit("SET_EVENTS", response.data);
-        NProgress.done();
+        commit('SET_EVENTS', response.data);
       })
       .catch((error) => {
-        dispatchErrorNotification("fetchEvents", dispatch, error);
-        NProgress.done();
+        dispatchErrorNotification('fetchEvents', dispatch, error);
       });
   },
   fetchEvent({ commit, dispatch }, id) {
     return EventService.getEvent(id)
       .then((response) => {
-        commit("SET_EVENT", response.data);
+        commit('SET_EVENT', response.data);
+        return response.data;
       })
       .catch((error) => {
         dispatchErrorNotification(`fetchEvent id=${id}`, dispatch, error);
