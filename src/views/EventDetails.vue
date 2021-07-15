@@ -32,14 +32,14 @@ export default {
   props: {
     event: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     organizerName() {
       return this.event.organizer ? this.event.organizer.name : "Unknown";
-    }
-  }
+    },
+  },
 };
 </script>
 

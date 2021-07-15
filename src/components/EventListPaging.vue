@@ -2,14 +2,14 @@
   <div>
     <router-link
       v-if="showPagingPrev"
-      :to="{ name: 'event-list', query: { page: currentPage - 1 } }"
+      :to="{ name: 'event-list', query: { page: page - 1 } }"
       rel="prev"
       >Previous page</router-link
     >
     <span v-if="showPagingNext && showPagingPrev"> | </span>
     <router-link
       v-if="showPagingNext"
-      :to="{ name: 'event-list', query: { page: currentPage + 1 } }"
+      :to="{ name: 'event-list', query: { page: page + 1 } }"
       rel="prev"
       >Nex page</router-link
     >
@@ -20,17 +20,14 @@
 import { mapState } from "vuex";
 
 export default {
-  props: ["current-page"],
+  props: ["page"],
   computed: {
     showPagingPrev() {
       // console.table({"eventCount": this.event.eventCount, "itemsPerPage": this.event.itemsPerPage, "currentPage": })
-      return (
-        this.event.eventCount < this.event.itemsPerPage ||
-        this.currentPage !== 1
-      );
+      return this.event.eventCount < this.event.itemsPerPage || this.page !== 1;
     },
     showPagingNext() {
-      return this.event.eventCount > this.currentPage * this.event.itemsPerPage;
+      return this.event.eventCount > this.page * this.event.itemsPerPage;
     },
     ...mapState(["event"]),
   },

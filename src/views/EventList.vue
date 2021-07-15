@@ -2,31 +2,44 @@
   <div>
     <h1>Events</h1>
     <event-card v-for="event in event.events" :key="event.id" :event="event" />
-    <event-list-paging :current-page="currentPage" />
+    <event-list-paging :page="page" />
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import EventListPaging from "@/components/EventListPaging.vue";
+import EventCard from "@/components/EventCard.vue";
+import { mapState } from "vuex";
+import store from "@/store";
 
-import EventListPaging from "../components/EventListPaging.vue";
-import EventCard from "../components/EventCard.vue";
-
+function getPageEvents(to, next) {
+  const currentPage = parseInt(to.query.page) || 1;
+  store
+    .dispatch("event/fetchEvents", {
+      page: currentPage,
+    })
+    .then(() => {
+      to.params.page = currentPage;
+      next();
+    })
+    .catch((err) => {
+      console.error(err);
+      next(false);
+    });
+}
 export default {
   components: {
     EventListPaging,
     EventCard,
   },
-  created() {
-    this.fetchEvents({
-      page: this.currentPage,
-    });
-  },
+  props: { page: { type: Number, required: true } },
   computed: {
-    currentPage() {
-      return parseInt(this.$route.query.page) || 1;
-    },
     ...mapState(["event", "user"]),
   },
-  methods: mapActions("event", ["fetchEvents"]), //using namespacing
+  beforeRouteEnter(to, from, next) {
+    getPageEvents(to, next);
+  },
+  beforeRouteUpdate(to, from, next) {
+    getPageEvents(to, next);
+  },
 };
 </script>
