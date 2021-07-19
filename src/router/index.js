@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import EventList from "../views/EventList.vue";
-import EventCreate from "../views/EventCreate.vue";
-import EventDetails from "../views/EventDetails.vue";
+import EventList from "@/views/EventList.vue";
+import EventCreate from "@/views/EventCreate.vue";
+import EventDetails from "@/views/EventDetails.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
 
 import store from "@/store";
 import NProgress from "nprogress";
@@ -39,6 +40,11 @@ const routes = [
           next(false);
         });
     },
+  },
+  {
+    path: "/*",
+    name: "page-not-found",
+    component: PageNotFound,
   },
 ];
 
