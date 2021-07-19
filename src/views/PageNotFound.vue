@@ -2,7 +2,10 @@
   <div>
     <h1>Oops</h1>
     <p>
-      Wrong way... <router-link to="/" class="brand">Try this way!</router-link>
+      Wrong way...
+      <router-link :to="{ name: 'event-list' }" class="brand"
+        >Try this way!</router-link
+      >
     </p>
   </div>
 </template>
