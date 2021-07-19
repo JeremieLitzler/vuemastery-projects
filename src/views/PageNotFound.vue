@@ -2,7 +2,11 @@
   <div>
     <h1>Oops</h1>
     <p>
-      Wrong way...
+      The
+      <em
+        >{{ resource }} <i>{{ value }}</i></em
+      >
+      was not found
       <router-link :to="{ name: 'event-list' }" class="brand"
         >Try this way!</router-link
       >
@@ -11,7 +15,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    resource: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: String,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style scoped></style>

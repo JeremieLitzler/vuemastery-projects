@@ -10,6 +10,7 @@ import EventListPaging from "@/components/EventListPaging.vue";
 import EventCard from "@/components/EventCard.vue";
 import { mapState } from "vuex";
 import store from "@/store";
+import ErrorHandler from "@/helpers/ErrorHandler";
 
 function getPageEvents(to, next) {
   const currentPage = parseInt(to.query.page) || 1;
@@ -22,8 +23,7 @@ function getPageEvents(to, next) {
       next();
     })
     .catch((err) => {
-      console.error(err);
-      next(false);
+      ErrorHandler.Handle404VsConnectivity(next, err, to);
     });
 }
 export default {

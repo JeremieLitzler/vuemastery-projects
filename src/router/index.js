@@ -3,10 +3,12 @@ import VueRouter from "vue-router";
 import EventList from "@/views/EventList.vue";
 import EventCreate from "@/views/EventCreate.vue";
 import EventDetails from "@/views/EventDetails.vue";
+import NetworkIssue from "@/views/NetworkIssue.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 
 import store from "@/store";
 import NProgress from "nprogress";
+import ErrorHandler from "@/helpers/ErrorHandler";
 
 Vue.use(VueRouter);
 
@@ -36,15 +38,28 @@ const routes = [
           next();
         })
         .catch((err) => {
-          console.error(err);
-          next(false);
+          ErrorHandler.Handle404VsConnectivity(next, err, to);
         });
     },
   },
   {
-    path: "/*",
+    path: "/network-issue",
+    name: "network-issue",
+    component: NetworkIssue,
+    props: true,
+  },
+  {
+    path: "/page-not-found",
     name: "page-not-found",
     component: PageNotFound,
+    props: true,
+  },
+  {
+    path: "*",
+    redirect: {
+      name: "page-not-found",
+      params: { resource: "page", value: "" },
+    },
   },
 ];
 

@@ -41,29 +41,23 @@ export const actions = {
         throw error;
       });
   },
-  fetchEvents({ commit, dispatch }, { page }) {
-    return EventService.getEvents(this.state.event.itemsPerPage, page)
-      .then((response) => {
+  fetchEvents({ commit }, { page }) {
+    return EventService.getEvents(this.state.event.itemsPerPage, page).then(
+      (response) => {
         // console.log("Action fetchEvents => events", response.data);
         if (response.headers) {
           commit("SET_EVENT_COUNT", response.headers["x-total-count"]);
         }
         commit("SET_EVENTS", response.data);
         return response.data;
-      })
-      .catch((error) => {
-        dispatchErrorNotification("fetchEvents", dispatch, error);
-      });
+      },
+    );
   },
-  fetchEvent({ commit, dispatch }, id) {
-    return EventService.getEvent(id)
-      .then((response) => {
-        commit("SET_EVENT", response.data);
-        return response.data;
-      })
-      .catch((error) => {
-        dispatchErrorNotification(`fetchEvent id=${id}`, dispatch, error);
-      });
+  fetchEvent({ commit }, id) {
+    return EventService.getEvent(id).then((response) => {
+      commit("SET_EVENT", response.data);
+      return response.data;
+    });
   },
 };
 
