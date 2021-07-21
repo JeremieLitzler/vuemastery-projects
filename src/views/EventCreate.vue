@@ -7,31 +7,28 @@
         <option v-for="cat in categories" :key="cat">{{ cat }}</option>
       </select>
       <h3>Name & describe your event</h3>
-      <div class="field">
-        <label>Title</label>
-        <input
-          v-model="event.title"
-          type="text"
-          placeholder="Add an event title"
-        />
-      </div>
-      <div class="field">
-        <label>Description</label>
-        <input
-          v-model="event.description"
-          type="text"
-          placeholder="Add a description"
-        />
-      </div>
+      <BaseInput
+        class="field"
+        label="Title"
+        type="text"
+        placeholder="Add an event title"
+        v-model="event.title"
+      />
+      <BaseInput
+        class="field"
+        label="Description"
+        type="text"
+        placeholder="Add a description"
+        v-model="event.description"
+      />
       <h3>Where is your event?</h3>
-      <div class="field">
-        <label>Location</label>
-        <input
-          v-model="event.location"
-          type="text"
-          placeholder="Add a location"
-        />
-      </div>
+      <BaseInput
+        class="field"
+        label="Location"
+        type="text"
+        placeholder="Add a location"
+        v-model="event.location"
+      />
       <h3>When is your event?</h3>
       <div class="field">
         <label>Date</label>
