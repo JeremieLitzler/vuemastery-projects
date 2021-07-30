@@ -5,6 +5,7 @@ import EventCreate from "@/views/EventCreate.vue";
 import EventDetails from "@/views/EventDetails.vue";
 import NetworkIssue from "@/views/NetworkIssue.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
+import ExampleVuelidate from "@/views/ExampleVuelidate.vue";
 
 import store from "@/store";
 import NProgress from "nprogress";
@@ -53,6 +54,10 @@ const routes = [
     name: "page-not-found",
     component: PageNotFound,
     props: true,
+  },
+  {
+    path: "/formvalidationshowcase",
+    component: ExampleVuelidate,
   },
   {
     path: "*",
