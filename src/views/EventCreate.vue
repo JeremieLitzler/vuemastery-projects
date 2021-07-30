@@ -45,7 +45,10 @@
         :selected="option === value"
         v-model="event.time"
       />
-      <input type="submit" class="button -fill-gradient" value="Submit" />
+      <!-- <input type="submit" class="button -fill-gradient" value="Submit" /> -->
+      <base-button type="submit" buttonClass="-fill-gradient"
+        >Submit</base-button
+      >
     </form>
   </div>
 </template>
@@ -57,9 +60,10 @@ import { v4 as uuidv4 } from "uuid";
 import NProgress from "nprogress";
 import BaseSelect from "../components/BaseSelect.vue";
 import BaseInput from "../components/BaseInput.vue";
+import BaseButton from "../components/BaseButton.vue";
 
 export default {
-  components: { Datepicker, BaseSelect, BaseInput },
+  components: { Datepicker, BaseSelect, BaseInput, BaseButton },
   data() {
     const times = [];
     for (let index = 1; index < 24; index++) {
