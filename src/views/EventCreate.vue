@@ -2,19 +2,23 @@
   <div>
     <h1>Create an Event</h1>
     <form @submit.prevent="saveEvent">
-      <label>Select a category</label>
-      <select v-model="event.category">
-        <option v-for="cat in categories" :key="cat">{{ cat }}</option>
-      </select>
+      <base-select
+        class="field"
+        label="Select a category"
+        :options="categories"
+        :selected="option === value"
+        v-model="event.category"
+      />
+
       <h3>Name & describe your event</h3>
-      <BaseInput
+      <base-input
         class="field"
         label="Title"
         type="text"
         placeholder="Add an event title"
         v-model="event.title"
       />
-      <BaseInput
+      <base-input
         class="field"
         label="Description"
         type="text"
@@ -22,7 +26,7 @@
         v-model="event.description"
       />
       <h3>Where is your event?</h3>
-      <BaseInput
+      <base-input
         class="field"
         label="Location"
         type="text"
@@ -34,12 +38,13 @@
         <label>Date</label>
         <datepicker v-model="event.date" placeholder="Select a date" />
       </div>
-      <div class="field">
-        <label>Select a time</label>
-        <select v-model="event.time">
-          <option v-for="time in times" :key="time">{{ time }}</option>
-        </select>
-      </div>
+      <base-select
+        class="field"
+        label="Select a time"
+        :options="times"
+        :selected="option === value"
+        v-model="event.time"
+      />
       <input type="submit" class="button -fill-gradient" value="Submit" />
     </form>
   </div>
@@ -50,9 +55,11 @@
 import Datepicker from "vuejs-datepicker";
 import { v4 as uuidv4 } from "uuid";
 import NProgress from "nprogress";
+import BaseSelect from "../components/BaseSelect.vue";
+import BaseInput from "../components/BaseInput.vue";
 
 export default {
-  components: { Datepicker },
+  components: { Datepicker, BaseSelect, BaseInput },
   data() {
     const times = [];
     for (let index = 1; index < 24; index++) {
